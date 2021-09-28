@@ -1,10 +1,7 @@
 package com.sofka.implementacionpp.fight;
 import co.com.sofka.domain.generic.EventChange;
 import com.sofka.implementacionpp.fight.events.*;
-import com.sofka.implementacionpp.fight.values.FightId;
-import com.sofka.implementacionpp.fight.values.Result;
-import com.sofka.implementacionpp.fight.values.Venue;
-import com.sofka.implementacionpp.fighter.values.FighterId;
+
 
 
 public class FightChange extends EventChange {
