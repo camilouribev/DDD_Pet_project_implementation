@@ -2,10 +2,12 @@ package com.sofka.implementacionpp.fighter;
 
 
 import co.com.sofka.domain.generic.AggregateEvent;
+import co.com.sofka.domain.generic.DomainEvent;
 import com.sofka.implementacionpp.fighter.events.*;
 import com.sofka.implementacionpp.fighter.values.*;
 import com.sofka.implementacionpp.weightdivision.values.OfficialName;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Fighter extends AggregateEvent<FighterId> {
@@ -17,9 +19,21 @@ public class Fighter extends AggregateEvent<FighterId> {
     protected boolean isInjured = false;
 
 
-    public Fighter(FighterId entityId, Name name, Stats stats){
+    public Fighter(FighterId entityId, Name name, Stats stats, FighterRecord record, Nutritionist nutritionist, Coach coach){
         super(entityId);
-        appendChange(new CreatedFighter(name, stats)).apply();
+        appendChange(new CreatedFighter(name, stats, record, coach, nutritionist)).apply();
+    }
+
+    private Fighter(FighterId entityId){
+        super(entityId);
+        subscribe(new FighterChange(this));
+
+    }
+
+    public static Fighter from(FighterId entityId, List<DomainEvent> events){
+        var fighter = new Fighter(entityId);
+        events.forEach(fighter::applyEvent);
+        return fighter;
     }
 
     public void joinFight(Name name){
