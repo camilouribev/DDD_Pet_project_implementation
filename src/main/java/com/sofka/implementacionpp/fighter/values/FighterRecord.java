@@ -1,12 +1,10 @@
 package com.sofka.implementacionpp.fighter.values;
 
 import co.com.sofka.domain.generic.ValueObject;
-
-import java.util.ArrayList;
 import java.util.Objects;
 
 
-public class FighterRecord implements ValueObject<ArrayList<String>> {
+public class FighterRecord implements  ValueObject<FighterRecord.Props>{
     private final String wins;
     private final String draws;
     private final String losses;
@@ -19,20 +17,27 @@ public class FighterRecord implements ValueObject<ArrayList<String>> {
         this.kos = Objects.requireNonNull(kos);
     }
 
-    public String getWins() {
-        return wins;
+    @Override
+    public Props value() {
+        return new Props(){
+            @Override
+            public String wins(){return wins;}
+            @Override
+            public String draws(){return draws;}
+            @Override
+            public String losses(){return losses;}
+            @Override
+            public String kos(){return kos;}
+
+        };
     }
 
-    public String getDraws() {
-        return draws;
-    }
-
-    public String getLosses() {
-        return losses;
-    }
-
-    public String getKos() {
-        return kos;
+    public interface Props{
+        String wins();
+        String draws();
+        String height();
+        String losses();
+        String kos();
     }
 
     @Override
@@ -40,21 +45,11 @@ public class FighterRecord implements ValueObject<ArrayList<String>> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FighterRecord that = (FighterRecord) o;
-        return Objects.equals(getWins(), that.getWins()) && Objects.equals(getDraws(), that.getDraws()) && Objects.equals(getLosses(), that.getLosses()) && Objects.equals(getKos(), that.getKos());
+        return Objects.equals(wins, that.wins) && Objects.equals(draws, that.draws) && Objects.equals(losses, that.losses) && Objects.equals(kos, that.kos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getWins(), getDraws(), getLosses(), getKos());
-    }
-
-    @Override
-    public ArrayList<String> value() {
-        ArrayList<String> fighterRecord = new ArrayList<>();
-        fighterRecord.add(this.getWins());
-        fighterRecord.add(this.getDraws());
-        fighterRecord.add(this.getLosses());
-        fighterRecord.add(this.getKos());
-        return fighterRecord;
+        return Objects.hash(wins, draws, losses, kos);
     }
 }

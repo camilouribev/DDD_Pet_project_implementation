@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class Fighter extends AggregateEvent<FighterId> {
-    protected Name name;
-    protected Coach coach;
-    protected Nutritionist nutritionist;
-    protected Stats stats;
-    protected FighterRecord fighterRecord;
-    protected boolean isInjured = false;
+        protected Name name;
+        protected Coach coach;
+        protected Nutritionist nutritionist;
+        protected Stats stats;
+        protected FighterRecord fighterRecord;
+        protected boolean isInjured = false;
 
 
     public Fighter(FighterId entityId, Name name, Stats stats, FighterRecord record, Nutritionist nutritionist, Coach coach){

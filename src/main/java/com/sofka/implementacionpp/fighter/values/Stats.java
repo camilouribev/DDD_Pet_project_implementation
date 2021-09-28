@@ -2,10 +2,9 @@ package com.sofka.implementacionpp.fighter.values;
 
 import co.com.sofka.domain.generic.ValueObject;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
-public class Stats implements ValueObject<ArrayList<String>> {
+public class Stats implements ValueObject<Stats.Props> {
     private final String hometown;
     private final String style;
     private final String height;
@@ -13,31 +12,35 @@ public class Stats implements ValueObject<ArrayList<String>> {
     private final String reach;
 
     public Stats(String hometown, String style, String height, String weight, String reach) {
-        this.hometown = hometown;
-        this.style = style;
-        this.height = height;
-        this.weight = weight;
-        this.reach = reach;
+        this.hometown = Objects.requireNonNull(hometown);
+        this.style = Objects.requireNonNull(style);
+        this.height = Objects.requireNonNull(height);
+        this.weight = Objects.requireNonNull(weight);
+        this.reach = Objects.requireNonNull(reach);
     }
 
-    public String getHometown() {
-        return hometown;
+    @Override
+    public Props value() {
+        return new Props(){
+            @Override
+            public String hometown(){return hometown;}
+            @Override
+            public String style(){return style;}
+            @Override
+            public String height(){return height;}
+            @Override
+            public String weight(){return weight;}
+            @Override
+            public String reach(){return reach;}
+        };
     }
 
-    public String getStyle() {
-        return style;
-    }
-
-    public String getHeight() {
-        return height;
-    }
-
-    public String getWeight() {
-        return weight;
-    }
-
-    public String getReach() {
-        return reach;
+    public interface Props{
+        String hometown();
+        String style();
+        String height();
+        String weight();
+        String reach();
     }
 
     @Override
@@ -52,16 +55,4 @@ public class Stats implements ValueObject<ArrayList<String>> {
     public int hashCode() {
         return Objects.hash(hometown, style, height, weight, reach);
     }
-
-    @Override
-    public ArrayList<String> value() {
-        ArrayList<String> stats = new ArrayList<>();
-        stats.add(this.getHometown());
-        stats.add(this.getStyle());
-        stats.add(this.getHeight());
-        stats.add(this.getWeight());
-        stats.add(this.getReach());
-
-
-        return stats;    }
 }
